@@ -1,10 +1,10 @@
 # Overview
 
-{Important! Do not say in this section that this is college assignment. Talk about what you are trying to accomplish as a software engineer to further your learning.}
+In my journey as a fullstack developer I realized that I need to learn languages that cater to mobile delopment, Kotlin is my first choice, so here's an adventure game written in Kotlin
 
-{Provide a description of the software that you wrote to demonstrate the Kotlin language.}
+I wrote a commandline adventure game that utilises most of the core features Kotlin offers. The game itself is a dungeon escape game with enemies and random items in different rooms
 
-{Describe your purpose for writing this software.}
+My purpose for writing this softwareis to demonstrate the capabilities of Kotlin and to challenge myself at the same time.
 
 {Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
 
@@ -12,21 +12,17 @@
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+I used vscode, kotlinc engine, and github for this project
 
-{Describe the programming language that you used and any libraries.}
+This software is written purely in Kotlin
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-
-- [Web Site Name](http://url.link.goes.here)
-- [Web Site Name](http://url.link.goes.here)
+- [W3Schools](https://www.w3schools.com/KOTLIN/index.php)
+- [Kotlinlang](https://kotlinlang.org/docs/home.html)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-
-- Item 1
-- Item 2
-- Item 3
+- Extended Content
+- 2D Version
+- More robust fighting system
