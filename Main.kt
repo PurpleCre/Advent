@@ -1,4 +1,9 @@
+// Dungeon Escape Game in Kotlin
+// A simple text-based adventure game where the player navigates through rooms, collects items, and fights enemies.
+
+// Room class to represent each location in the dungeon
 data class Room(
+    // Room properties
     val name: String,
     val description: String,
     val exits: MutableMap<String, Room> = mutableMapOf(),
@@ -6,12 +11,21 @@ data class Room(
     var enemy: Enemy? = null
 )
 
+// Player class to manage player state
 class Player(
     var currentRoom: Room,
     var health: Int = 100
 ) {
     val inventory = mutableListOf<String>()
 
+    val visitedRooms = mutableSetOf<Room>()
+
+    // Mark the current room as visited
+    fun visitCurrentRoom() {
+        visitedRooms.add(currentRoom)
+    }
+
+    // Move to a different room
     fun move(direction: String) {
         val nextRoom = currentRoom.exits[direction]
         if (nextRoom != null) {
@@ -23,9 +37,11 @@ class Player(
         }
     }
 
+    // Pick up an item in the current room
     fun take(item: String) {
         if (item in currentRoom.items) {
             inventory.add(item)
+            visitCurrentRoom() // mark room as visited
             currentRoom.items.remove(item)
             println("You picked up a $item.")
         } else {
@@ -33,6 +49,7 @@ class Player(
         }
     }
 
+    // Show player's inventory
     fun showInventory() {
         if (inventory.isEmpty()) {
             println("Your inventory is empty.")
@@ -42,14 +59,17 @@ class Player(
     }
 }
 
+// Enemy class to represent adversaries in the dungeon
 class Enemy(
     val name: String,
     var health: Int,
     val damage: Int
 ) {
+    // Check if the enemy is still alive
     fun isAlive(): Boolean = health > 0
 }
 
+// Game class to manage game state and logic
 class Game {
     private lateinit var entrance: Room
     private lateinit var hallway: Room
@@ -57,6 +77,7 @@ class Game {
 
     private lateinit var player: Player
 
+    // Setup the game world
     fun setup() {
         // Rooms
         entrance = Room("Entrance", "You stand at the dungeon entrance. A hallway lies north.")
@@ -78,6 +99,7 @@ class Game {
         player = Player(currentRoom = entrance)
     }
 
+    // Start the game loop
     fun start() {
         println("Welcome to the Dungeon Escape!")
         println("Type 'help' to see available commands, or 'quit' to exit.\n")
@@ -94,6 +116,7 @@ class Game {
         }
     }
 
+    // Process player commands
     private fun processCommand(command: String) {
         val words = command.split(" ")
         when (words[0]) {
@@ -102,11 +125,13 @@ class Game {
             "inventory" -> player.showInventory()
             "look" -> println(player.currentRoom.description)
             "fight" -> fight()
+            "map" -> showMap()
             "help" -> showHelp()
             else -> println("I don't understand that command.")
         }
     }
 
+    // Display help menu
     private fun showHelp() {
         println(
             """
@@ -116,12 +141,26 @@ class Game {
             - inventory        : Show what you're carrying
             - look             : Look around the current room
             - fight            : Fight an enemy if one is present
+            - map              : See a map of visited rooms
             - help             : Show this help menu
             - quit             : Exit the game
             """.trimIndent()
         )
     }
 
+    // Display a simple map of visited rooms
+    private fun showMap() {
+        println("\nDungeon Map (visited rooms marked with *)")
+        val allRooms = listOf(entrance, hallway, treasureRoom)
+        
+        for (room in allRooms) {
+            val marker = if (room in player.visitedRooms) "*" else " "
+            println("$marker ${room.name}")
+        }
+        println()
+    }
+
+    // fight logic
     private fun fight() {
         val enemy = player.currentRoom.enemy
         if (enemy == null || !enemy.isAlive()) {

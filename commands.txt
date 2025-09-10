@@ -1,0 +1,2 @@
+compile = kotlinc Main.kt -include-runtime -d game.jar
+run = java -jar game.jar
