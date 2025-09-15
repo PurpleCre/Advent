@@ -32,6 +32,9 @@ class Player(
             currentRoom = nextRoom
             println("You move $direction to ${currentRoom.name}.")
             println(currentRoom.description)
+            if (currentRoom.items.size != 0) {
+                println("You notice a ${currentRoom.items[0]} on the floor")
+            }
         } else {
             println("You can't go that way.")
         }
@@ -172,7 +175,7 @@ class Game {
         while (enemy.isAlive() && player.health > 0) {
             if ("sword" in player.inventory) {
                 enemy.health -= 15
-                println("You strike the ${enemy.name}! Enemy health: ${enemy.health}")
+                println("You strike the ${enemy.name} with a sword! Enemy health: ${enemy.health}")
             } else {
                 enemy.health -= 5
                 println("You punch the ${enemy.name}. Enemy health: ${enemy.health}")
